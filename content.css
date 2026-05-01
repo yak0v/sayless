@@ -1,0 +1,64 @@
+.bsd-overlay {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  z-index: 999;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: calc(100% - 12px);
+  font-family: "Roboto", "Segoe UI", sans-serif;
+}
+
+.bsd-badge {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: 700;
+  font-size: 12px;
+  line-height: 1;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  align-self: flex-start;
+  letter-spacing: 0.3px;
+}
+
+.bsd-badge.bsd-err {
+  background: #555;
+  font-size: 11px;
+  padding: 3px 6px;
+}
+
+.bsd-score {
+  font-size: 14px;
+  font-weight: 800;
+}
+
+.bsd-label {
+  font-size: 10px;
+  opacity: 0.95;
+  letter-spacing: 0.5px;
+}
+
+.bsd-summary {
+  background: rgba(0, 0, 0, 0.78);
+  color: #fff;
+  font-size: 11px;
+  line-height: 1.3;
+  padding: 4px 6px 4px 8px;
+  border-left: 3px solid #888;
+  border-radius: 2px;
+  max-width: 100%;
+  word-wrap: break-word;
+  align-self: flex-start;
+}
+
+.bsd-err-summary {
+  background: rgba(80, 80, 80, 0.85);
+  font-style: italic;
+  color: #ddd;
+  border-left-color: #888 !important;
+}

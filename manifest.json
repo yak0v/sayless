@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "YouTube Bullshit Detector",
+  "version": "0.2.0",
+  "description": "Rates YouTube homepage videos by transcript content on a clickbait/bullshit scale and overlays a one-sentence summary.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://api.anthropic.com/*"
+  ],
+  "optional_host_permissions": ["https://*/*", "http://localhost/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "YouTube Bullshit Detector"
+  }
+}
