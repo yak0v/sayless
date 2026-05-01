@@ -1,4 +1,4 @@
-app = "yt-transcript"
+app = "sayless"
 primary_region = "iad"
 
 [build]
