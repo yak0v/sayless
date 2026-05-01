@@ -141,8 +141,6 @@ async function fetchTranscript(videoId) {
         "20",
         "--retries",
         "2",
-        "--extractor-args",
-        "youtube:player_client=tv,web,ios",
         "-o",
         path.join(tmp, "%(id)s"),
         `https://www.youtube.com/watch?v=${videoId}`,
