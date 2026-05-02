@@ -87,12 +87,26 @@ const inflight = new Map();
 
 function runYtDlp(args) {
   return new Promise((resolve, reject) => {
-    const p = spawn("yt-dlp", args, { stdio: ["ignore", "pipe", "pipe"] });
+    // detached: true puts yt-dlp in its own process group so we can SIGKILL
+    // the whole group (including deno subprocesses it spawns) on timeout.
+    const p = spawn("yt-dlp", args, {
+      stdio: ["ignore", "pipe", "pipe"],
+      detached: true,
+    });
     let stderr = "";
     let killed = false;
+    const killGroup = () => {
+      try {
+        process.kill(-p.pid, "SIGKILL");
+      } catch {
+        try {
+          p.kill("SIGKILL");
+        } catch {}
+      }
+    };
     const timer = setTimeout(() => {
       killed = true;
-      p.kill("SIGKILL");
+      killGroup();
     }, YTDLP_TIMEOUT_MS);
     p.stderr.on("data", (d) => (stderr += d.toString()));
     p.on("error", (e) => {
@@ -218,7 +232,16 @@ const server = http.createServer(async (req, res) => {
       return send(res, 400, JSON.stringify({ error: "bad id" }));
     }
     try {
-      const text = await getTranscript(id);
+      const REQUEST_TIMEOUT_MS = 55_000;
+      const text = await Promise.race([
+        getTranscript(id),
+        new Promise((_, reject) =>
+          setTimeout(
+            () => reject(new Error("request timeout")),
+            REQUEST_TIMEOUT_MS
+          )
+        ),
+      ]);
       return send(res, 200, JSON.stringify({ id, transcript: text }));
     } catch (err) {
       return send(
