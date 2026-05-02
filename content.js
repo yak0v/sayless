@@ -87,6 +87,11 @@ function renderScore(tile, result) {
   `;
 }
 
+function renderPending(tile) {
+  const overlay = ensureOverlay(tile);
+  overlay.innerHTML = `<div class="bsd-badge bsd-pending"><span class="bsd-label">…</span></div>`;
+}
+
 function renderError(tile, msg) {
   const overlay = ensureOverlay(tile);
   overlay.innerHTML = `
@@ -125,7 +130,7 @@ class Limiter {
     }
   }
 }
-const transcriptLimiter = new Limiter(4);
+const transcriptLimiter = new Limiter(8);
 
 async function getServerUrl() {
   const { serverUrl } = await chrome.storage.local.get("serverUrl");
@@ -175,6 +180,7 @@ async function processTile(tile) {
     return;
   }
   seen.set(key, null);
+  renderPending(tile);
 
   let transcript;
   try {
@@ -201,17 +207,29 @@ async function processTile(tile) {
   renderScore(tile, stored);
 }
 
+// IntersectionObserver: only process tiles when they're visible (or about to be).
+// rootMargin pre-fetches a viewport ahead so scrolling feels instant.
+const visibility = new IntersectionObserver(
+  (entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const tile = e.target;
+      visibility.unobserve(tile);
+      processTile(tile);
+    }
+  },
+  { rootMargin: "800px 0px 800px 0px", threshold: 0 }
+);
+
 function scan() {
   for (const tile of findTiles()) {
     if (tile.dataset.bsdScanned) continue;
     tile.dataset.bsdScanned = "1";
-    processTile(tile);
+    visibility.observe(tile);
   }
 }
 
-const observer = new MutationObserver(() => {
-  scheduleScan();
-});
+const mutationObserver = new MutationObserver(() => scheduleScan());
 
 let scanTimer = null;
 function scheduleScan() {
@@ -219,10 +237,10 @@ function scheduleScan() {
   scanTimer = setTimeout(() => {
     scanTimer = null;
     scan();
-  }, 300);
+  }, 200);
 }
 
-observer.observe(document.documentElement, {
+mutationObserver.observe(document.documentElement, {
   childList: true,
   subtree: true,
 });

@@ -32,6 +32,18 @@
   padding: 3px 6px;
 }
 
+.bsd-badge.bsd-pending {
+  background: rgba(0, 0, 0, 0.5);
+  font-size: 11px;
+  padding: 3px 8px;
+  animation: bsd-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes bsd-pulse {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
 .bsd-score {
   font-size: 14px;
   font-weight: 800;

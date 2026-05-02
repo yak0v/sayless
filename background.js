@@ -93,8 +93,8 @@ async function classifyBatch(items) {
 
 const queue = [];
 let flushTimer = null;
-const FLUSH_DELAY_MS = 250;
-const MAX_BATCH = 3;
+const FLUSH_DELAY_MS = 0;
+const MAX_BATCH = 1;
 
 function scheduleFlush() {
   if (flushTimer) return;
