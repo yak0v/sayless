@@ -130,7 +130,7 @@ class Limiter {
     }
   }
 }
-const transcriptLimiter = new Limiter(8);
+const transcriptLimiter = new Limiter(4);
 
 async function getServerUrl() {
   const { serverUrl } = await chrome.storage.local.get("serverUrl");
