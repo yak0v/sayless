@@ -14,7 +14,7 @@ const CACHE_TTL_MS = Number(process.env.CACHE_TTL_MS || 24 * 60 * 60 * 1000);
 const CACHE_MAX = Number(process.env.CACHE_MAX || 5000);
 const RATE_WINDOW_MS = Number(process.env.RATE_WINDOW_MS || 60_000);
 const RATE_MAX = Number(process.env.RATE_MAX || 60);
-const YTDLP_CONCURRENCY = Number(process.env.YTDLP_CONCURRENCY || 2);
+const YTDLP_CONCURRENCY = Number(process.env.YTDLP_CONCURRENCY || 4);
 const YTDLP_TIMEOUT_MS = Number(process.env.YTDLP_TIMEOUT_MS || 45_000);
 const ALLOWED_ORIGIN = process.env.ALLOWED_ORIGIN || "*";
 
@@ -141,6 +141,8 @@ async function fetchTranscript(videoId) {
         "10",
         "--retries",
         "1",
+        "--extractor-args",
+        "youtube:player_skip=webpage,configs,initial_data",
         "-o",
         path.join(tmp, "%(id)s"),
         `https://www.youtube.com/watch?v=${videoId}`,
