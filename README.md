@@ -1,6 +1,8 @@
 # SlopShield
 
-Consuming anything online is a constant struggle to filter quality from clickbait - a quiet battle between you and the creators and algorithms trying to squeeze a few extra cents out of your attention. Generative AI has aggressively tipped that battle: mass-producing low-quality slop that's indistinguishable from real content is now nearly effortless.
+Consuming anything online is a constant struggle to filter quality from clickbait - a quiet battle between you and the creators and algorithms trying to make few extra cents per click, your attention is all they need.
+
+Degenerative AI has aggressively tipped that battle: mass-producing low-quality slop that's indistinguishable from real content is now nearly effortless.
 
 **This is an attempt to fight back.**
 
