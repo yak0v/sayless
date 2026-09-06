@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        font-family: -apple-system, "Segoe UI", sans-serif;
+        width: 320px;
+        padding: 14px;
+        margin: 0;
+      }
+      h1 {
+        font-size: 14px;
+        margin: 0;
+      }
+      .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 12px;
+      }
+      .switch {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        cursor: pointer;
+        user-select: none;
+      }
+      .switch input {
+        position: absolute;
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .switch .state {
+        font-size: 11px;
+        font-weight: 600;
+        color: #666;
+      }
+      .switch .track {
+        position: relative;
+        width: 36px;
+        height: 20px;
+        border-radius: 10px;
+        background: #bdbdbd;
+        transition: background 0.15s;
+        flex: none;
+      }
+      .switch .track::after {
+        content: "";
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+        transition: transform 0.15s;
+      }
+      .switch input:checked + .track {
+        background: #2e7d32;
+      }
+      .switch input:checked + .track::after {
+        transform: translateX(16px);
+      }
+      .switch input:focus-visible + .track {
+        outline: 2px solid #1a73e8;
+        outline-offset: 2px;
+      }
+      label {
+        display: block;
+        font-size: 12px;
+        margin: 10px 0 4px;
+        color: #444;
+        font-weight: 600;
+      }
+      .dim {
+        color: #999;
+        font-weight: 400;
+      }
+      input[type="text"],
+      input[type="password"],
+      select {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 6px 8px;
+        font-size: 12px;
+        font-family: monospace;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        background: #fff;
+      }
+      button {
+        margin-top: 12px;
+        padding: 7px 12px;
+        font-size: 13px;
+        background: #1a73e8;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #1558b0;
+      }
+      button:disabled {
+        background: #9bb8e8;
+        cursor: default;
+      }
+      .status {
+        margin-top: 8px;
+        font-size: 11px;
+        min-height: 14px;
+      }
+      .ok {
+        color: #2e7d32;
+      }
+      .err {
+        color: #c62828;
+      }
+      .note {
+        margin-top: 12px;
+        font-size: 11px;
+        color: #666;
+        line-height: 1.4;
+      }
+      code {
+        font-size: 11px;
+        background: #f3f3f3;
+        padding: 1px 3px;
+        border-radius: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <h1>SlopShield</h1>
+      <label class="switch">
+        <span class="state" id="toggleState"></span>
+        <input type="checkbox" id="toggle" />
+        <span class="track"></span>
+      </label>
+    </div>
+
+    <label for="provider">Provider</label>
+    <select id="provider">
+      <option value="anthropic">Anthropic</option>
+      <option value="openai">OpenAI</option>
+      <option value="gemini">Google Gemini</option>
+      <option value="custom">OpenAI-compatible (custom)</option>
+    </select>
+
+    <div id="baseUrlRow" hidden>
+      <label for="baseUrl">Base URL</label>
+      <input id="baseUrl" type="text" placeholder="http://localhost:11434/v1" />
+    </div>
+
+    <label for="key">API key <span class="dim" id="keyHint"></span></label>
+    <input id="key" type="password" />
+
+    <label for="model">Model <span class="dim" id="modelHint"></span></label>
+    <input id="model" type="text" />
+
+    <button id="save">Save &amp; test</button>
+    <div class="status" id="status"></div>
+
+    <div class="note" id="note"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>

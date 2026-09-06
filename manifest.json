@@ -1,0 +1,28 @@
+{
+  "manifest_version": 3,
+  "name": "SlopShield",
+  "version": "1.1.0",
+  "description": "Scores YouTube videos 0-100 on a bullshit scale from their actual transcripts, right on the thumbnail.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://api.anthropic.com/*",
+    "https://api.openai.com/*",
+    "https://generativelanguage.googleapis.com/*"
+  ],
+  "optional_host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "SlopShield"
+  }
+}
