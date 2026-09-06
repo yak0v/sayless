@@ -8,7 +8,7 @@ Degenerative AI has aggressively tipped that battle: mass-producing low-quality 
 
 Instead of using AI to generate yet more content nobody asked for, it points the model the other way - letting it chew through the endless feed of garbage so you don't have to. Every video on your YouTube homepage gets a 0-100 bullshit score and a one-sentence summary of what's actually inside, judged from the transcript.
 
-This is the first experiment in what will hopefully become a series: generative AI used not to add to the flood, but to hold it back - a quality firewall for our overflooded brains.
+A content-level firewall for the asymmetric battle against unsolicited slop.
 
 <p>
 <img src="screenshots/bait-gates-ai.png" width="49%" alt="78 BAIT: vague AI monologue">
